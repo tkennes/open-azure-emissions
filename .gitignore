@@ -1,0 +1,14 @@
+# Jetbrains project files
+.idea
+*.iml
+
+# UI Prep
+ui/.parcel-cache
+ui/.cache
+ui/dist
+ui/node_modules/
+
+# Build artifacts
+cmd/open-azure-emissions/open-azure-emissions
+cmd/open-azure-emissions/open-azure-emissions-amd64
+cmd/open-azure-emissions/open-azure-emissions-arm64

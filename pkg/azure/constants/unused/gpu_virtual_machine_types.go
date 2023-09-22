@@ -1,0 +1,38 @@
+package azure_constants
+
+var (
+	GPU_VIRTUAL_MACHINE_TYPES = map[string]int{
+		"NC6":              1,
+		"NC12":             2,
+		"NC24r":            4,
+		"NC24":             4,
+		"NC6s v2":          1,
+		"NC12s v2":         2,
+		"NC24rs v2":        4,
+		"NC24s v2":         4,
+		"NC6s v3":          1,
+		"NC12s v3":         2,
+		"NC24rs v3":        4,
+		"NC24s v3":         4,
+		"NC4as T4 v3":      1,
+		"NC8as T4 v3":      1,
+		"NC16as T4 v3":     1,
+		"NC64as T4 v3":     4,
+		"NP10s":            1,
+		"NP20s":            2,
+		"NP40s":            4,
+		"NV6":              1,
+		"NV12":             2,
+		"NV24":             4,
+		"NV12s v3":         1,
+		"NV24s v3":         2,
+		"NV48s v3":         4,
+		"ND6s":             1,
+		"ND12s":            2,
+		"ND24rs":           4,
+		"ND24s":            4,
+		"ND40rs v2":        8,
+		"ND96asr A100 v4":  8,
+		"ND96amsr A100 v4": 8,
+	}
+)
