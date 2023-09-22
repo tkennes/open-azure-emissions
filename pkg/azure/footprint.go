@@ -11,13 +11,14 @@ import (
 
 	azure_constants_meters "github.com/tkennes/open-azure-emissions/pkg/azure/constants/meters"
 	azure_footprint "github.com/tkennes/open-azure-emissions/pkg/azure/footprint"
+	azure_footprint_core "github.com/tkennes/open-azure-emissions/pkg/azure/footprint/core"
 	azure_models "github.com/tkennes/open-azure-emissions/pkg/azure/models"
 )
 
 func AssessFootprint(data azure_models.AzureCostDetails) (float64, error) {
 	if IsMeterCategoryFootprintEstimable(data.MeterCategory) {
-		switch meterCategory := data.MeterCategory; meterCategory {
-		case "Azure App Service":
+		switch {
+		case data.MeterCategory == "Azure App Service":
 			if !slices.Contains(azure_constants_meters.AZURE_APP_SERVICE_METER_SUBCATEGORIES_WITHOUT_COMPUTE, data.MeterSubCategory) {
 				// Ignoring the unknown Azure App Services
 				return azure_footprint.EstimateAppServiceComputeEnergyConsumption(data)
@@ -27,7 +28,7 @@ func AssessFootprint(data azure_models.AzureCostDetails) (float64, error) {
 				log.Infof(message)
 				return 0, errors.New(message)
 			}
-		case "Virtual Machines":
+		case data.MeterCategory == "Virtual Machines":
 			if data.MeterName != "" {
 				return azure_footprint.EstimateVirtualMachineEnergyConsumption(data)
 			} else {
@@ -35,9 +36,9 @@ func AssessFootprint(data azure_models.AzureCostDetails) (float64, error) {
 				log.Infof(message)
 				return 0, errors.New(message)
 			}
-		case "Redis Cache":
+		case data.MeterCategory == "Redis Cache":
 			return azure_footprint.EstimateRedisCacheEnergyConsumption(data)
-		case "Storage":
+		case data.MeterCategory == "Storage":
 			if slices.Contains(azure_constants_meters.ESTIMABLE_STORAGE_SUBCATEGORIES, data.MeterSubCategory) {
 				if !slices.Contains(azure_constants_meters.UNESTIMABLE_STORAGE_METER_NAMES, data.MeterName) {
 					return azure_footprint.EstimateManagedDiskEnergyConsumption(data)
@@ -51,11 +52,11 @@ func AssessFootprint(data azure_models.AzureCostDetails) (float64, error) {
 				log.Infof(message)
 				return 0, errors.New(message)
 			}
-		case stringutil.Contains(meterCategory, azure_constants_meters.ESTIMABLE_NETWORKING_CATEGORIES):
+		case stringutil.Contains(data.MeterCategory, azure_constants_meters.ESTIMABLE_NETWORKING_CATEGORIES):
 			if data.UnitOfMeasure == "1 GB" {
-				return azure_footprint.EstimateNetworkingEnergyConsumption(data)
+				return azure_footprint_core.EstimateNetworkingEnergyConsumption(data)
 			} else {
-				message := fmt.Sprintf("Meter category \"%s\": Meter UnitOfMeasure \"%s\" not estimable, product: \"%s\"", data.meterCategory, data.UnifOfMeasure, data.Product)
+				message := fmt.Sprintf("Meter category \"%s\": Meter UnitOfMeasure \"%s\" not estimable, product: \"%s\"", data.MeterCategory, data.UnitOfMeasure, data.Product)
 				log.Infof(message)
 				return 0, errors.New(message)
 			}

@@ -1,4 +1,4 @@
-name: Develop PR - build test
+name: Generic Build
 
 on:
   push
