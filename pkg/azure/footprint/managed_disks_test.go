@@ -3,6 +3,7 @@ package azure_footprint
 import (
 	"testing"
 
+	azure_footprint_core "github.com/tkennes/open-azure-emissions/pkg/azure/footprint/core"
 	azure_models "github.com/tkennes/open-azure-emissions/pkg/azure/models"
 	test_helpers "github.com/tkennes/open-azure-emissions/pkg/util/test_helpers"
 )
@@ -45,7 +46,7 @@ func TestEstimateManagedDiskEnergyConsumption(t *testing.T) {
 	}
 
 	for _, testcase := range testcases {
-		result, err := EstimateManagedDiskEnergyConsumption(testcase.Data)
+		result, err := azure_footprint_core.EstimateManagedDiskEnergyConsumption(testcase.Data)
 		if err != nil {
 			t.Errorf("Error: %s", err)
 		} else if !test_helpers.FloatsAlmostEqual(result, testcase.ExpectedFloat) {

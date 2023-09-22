@@ -1,4 +1,4 @@
-package azure_footprint
+package azure_footprint_core
 
 import (
 	"github.com/tkennes/open-azure-emissions/pkg/util/parsers"

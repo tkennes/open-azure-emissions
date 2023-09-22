@@ -1,4 +1,4 @@
-package azure_footprint
+package azure_footprint_core
 
 import (
 	"errors"

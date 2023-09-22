@@ -8,6 +8,7 @@ import (
 
 	azure_constants_compute_processors "github.com/tkennes/open-azure-emissions/pkg/azure/constants/compute_processors"
 	azure_constants_services "github.com/tkennes/open-azure-emissions/pkg/azure/constants/services"
+	azure_footprint_core "github.com/tkennes/open-azure-emissions/pkg/azure/footprint/core"
 	azure_models "github.com/tkennes/open-azure-emissions/pkg/azure/models"
 )
 
@@ -15,7 +16,7 @@ func EstimateAppServiceComputeEnergyConsumption(data azure_models.AzureCostDetai
 	machine := parsers.ParseAppServiceMachine(data.MeterName)
 	if appServicePlan, found := azure_constants_services.APP_SERVICE_PLANS[machine]; found {
 		if instanceTypes, found := azure_constants_compute_processors.INSTANCE_TYPE_COMPUTE_PROCESSOR_MAPPING[appServicePlan.Name]; found {
-			return EstimateComputeEnergy(
+			return azure_footprint_core.EstimateComputeEnergy(
 				instanceTypes,
 				data,
 				appServicePlan.VCPUs,

@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	azure_constant_services "github.com/tkennes/open-azure-emissions/pkg/azure/constants/services"
+	azure_footprint_core "github.com/tkennes/open-azure-emissions/pkg/azure/footprint/core"
 	azure_models "github.com/tkennes/open-azure-emissions/pkg/azure/models"
 	"github.com/tkennes/open-azure-emissions/pkg/util/parsers"
 )
@@ -19,7 +20,7 @@ func EstimateRedisCacheEnergyConsumption(data azure_models.AzureCostDetails) (fl
 				return 0, err
 			}
 		}
-		return EstimateMemoryEnergy(
+		return azure_footprint_core.EstimateMemoryEnergy(
 			data,
 			redisCache.Size,
 			azure_constant_services.REDIS_CACHE_REPLICAS[redisCache.Series],

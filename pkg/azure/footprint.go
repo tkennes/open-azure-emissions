@@ -7,7 +7,7 @@ import (
 	"golang.org/x/exp/slices"
 
 	"github.com/tkennes/open-azure-emissions/pkg/log"
-	"github.com/tkennes/open-azure-emissions/pkg/stringutil"
+	"github.com/tkennes/open-azure-emissions/pkg/util/stringutil"
 
 	azure_constants_meters "github.com/tkennes/open-azure-emissions/pkg/azure/constants/meters"
 	azure_footprint "github.com/tkennes/open-azure-emissions/pkg/azure/footprint"
