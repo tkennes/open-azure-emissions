@@ -32,7 +32,7 @@ func AssessFootprint(data azure_models.AzureCostDetails) (float64, error) {
 			if data.MeterName != "" {
 				return azure_footprint.EstimateVirtualMachineEnergyConsumption(data)
 			} else {
-				message := fmt.Sprintf("Meter category \"%s\": Meter name is empty \"%s\", probably because \"%s\" contains reservations", data.MeterCategory, data.Product)
+				message := fmt.Sprintf("Meter category \"%s\": Meter name is empty \"%s\", probably because \"%s\" contains reservations", data.MeterCategory, data.MeterName, data.Product)
 				log.Infof(message)
 				return 0, errors.New(message)
 			}
@@ -43,12 +43,12 @@ func AssessFootprint(data azure_models.AzureCostDetails) (float64, error) {
 				if !slices.Contains(azure_constants_meters.UNESTIMABLE_STORAGE_METER_NAMES, data.MeterName) {
 					return azure_footprint.EstimateManagedDiskEnergyConsumption(data)
 				} else {
-					message := fmt.Sprintf("Meter category \"%s\": Meter name \"%s\" not estimable", data.MeterName)
+					message := fmt.Sprintf("Meter category \"%s\": Meter name \"%s\" not estimable", data.MeterCategory, data.MeterName)
 					log.Infof(message)
 					return 0, errors.New(message)
 				}
 			} else {
-				message := fmt.Sprintf("Meter category \"%s\": Meter subcategory \"%s\" not estimable", data.MeterSubCategory)
+				message := fmt.Sprintf("Meter category \"%s\": Meter subcategory \"%s\" not estimable", data.MeterCategory, data.MeterSubCategory)
 				log.Infof(message)
 				return 0, errors.New(message)
 			}
