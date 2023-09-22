@@ -3,7 +3,6 @@ package azure_footprint
 import (
 	"testing"
 
-	azure_footprint_core "github.com/tkennes/open-azure-emissions/pkg/azure/footprint/core"
 	azure_models "github.com/tkennes/open-azure-emissions/pkg/azure/models"
 	test_helpers "github.com/tkennes/open-azure-emissions/pkg/util/test_helpers"
 )
@@ -36,7 +35,7 @@ func TestEstimateVirtualMachineEnergyConsumption(t *testing.T) {
 	}
 
 	for _, testcase := range testcases {
-		result, err := azure_footprint_core.EstimateVirtualMachineEnergyConsumption(testcase.Data)
+		result, err := EstimateVirtualMachineEnergyConsumption(testcase.Data)
 		if err != nil {
 			t.Errorf("TestEstimateVirtualMachineEnergyConsumption Error: %s", err)
 		} else if !test_helpers.FloatsAlmostEqual(result, testcase.ExpectedFloat) {
