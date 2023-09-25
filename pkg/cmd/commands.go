@@ -5,10 +5,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/tkennes/open-azure-emissions/pkg/cmd/agent"
-	"github.com/tkennes/open-azure-emissions/pkg/log"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/tkennes/open-azure-emissions/pkg/log"
 )
 
 const (
@@ -21,7 +20,6 @@ const (
 
 // Execute runs the root command for the application. By default, if no command argument is provided,
 // on the command line, the emissions-model is executed by default.
-//
 //
 // Any additional commands passed in will be added to the root command.
 func Execute(emissionsModelCmd *cobra.Command, cmds ...*cobra.Command) error {
@@ -43,7 +41,6 @@ func Execute(emissionsModelCmd *cobra.Command, cmds ...*cobra.Command) error {
 
 	return rootCmd.Execute()
 }
-
 
 // newRootCommand creates a new root command which will act as a sub-command router for the
 // cost-model application.
@@ -71,25 +68,24 @@ func newRootCommand(emissionsModelCmd *cobra.Command, cmds ...*cobra.Command) *c
 	cmd.AddCommand(
 		append([]*cobra.Command{
 			//emissionsModelCmd,
-			newAgentCommand(),
+			newServerCommand(),
 		}, cmds...)...,
 	)
 
 	return cmd
 }
 
+func newServerCommand() *cobra.Command {
+	opts := &ServerOpts{}
 
-func newAgentCommand() *cobra.Command {
-	opts := &agent.AgentOpts{}
-
-	agentCmd := &cobra.Command{
+	serverCmd := &cobra.Command{
 		Use:   CommandEmissionsModel,
 		Short: "Agent mode operates as a metric exporter only.",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// Init logging here so cobra/viper has processed the command line args and flags
 			// otherwise only envvars are available during init
 			log.InitLogging(true)
-			return agent.Execute(opts)
+			return RunServer(opts)
 		},
 	}
 
@@ -97,9 +93,8 @@ func newAgentCommand() *cobra.Command {
 	// TODO: object, and pass that object to the agent Execute()
 	// agentCmd.Flags().<Type>VarP(&opts.<Property>, "<flag>", "<short>", <default>, "<usage>")
 
-	return agentCmd
+	return serverCmd
 }
-
 
 // validate checks the command's use to see if it matches an expected command name.
 func validate(cmd *cobra.Command, command string) error {
