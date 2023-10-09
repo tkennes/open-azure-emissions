@@ -14,8 +14,8 @@ import (
 func EstimateManagedDiskEnergyConsumption(data azure_models.AzureCostDetails) (float64, error) {
 	diskName := parsers.ParseManagedDiskType(data.MeterName)
 	if managedDisk, found := azure_constants_services.MANAGED_DISKS[diskName]; found {
-		redundancy := parsers.ParseManagedDiskRedundancy(data.MeterName)
-		replicas := azure_constants_services.MANAGED_DISK_REPLICAS[redundancy]
+		redundancy := parsers.ParseStorageRedundancy(data.MeterName)
+		replicas := azure_constants_services.STORAGE_REDUNDANCY_TO_REPLICAS[redundancy]
 
 		terabytes := managedDisk.Size / 1000
 

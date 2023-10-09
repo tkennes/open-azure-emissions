@@ -10,19 +10,12 @@ func ParseAppServiceMachine(meterName string) string {
 	return strings.Replace(meterName, " App", "", 1)
 }
 
-func ParseRedisCacheInstance(meterName string) string {
-	name := strings.Replace(meterName, " Instance", "", 1)
-	return strings.Replace(name, " Cache", "", 1)
-}
-
-func ParseRedisCacheSeries(meterSubCategory string) (string, error) {
-	if strings.Contains(meterSubCategory, "Standard") {
-		return "Standard", nil
-	} else if strings.Contains(meterSubCategory, "Basic") {
-		return "Basic", nil
-	} else {
-		return "", errors.New(fmt.Sprintf("Redis Cache (meterSubCategory: \"%s\"): was not detected as Basic or Standard", meterSubCategory))
-	}
+func ParseContainerRegistrySku(productName string) string {
+	// There are 3 options we are tackling here:
+	// Container Registry - Basic
+	// Container Registry - Standard
+	// Container Registry - Premium
+	return strings.Replace(productName, "Container Registry - ", "", 1)
 }
 
 func ParseGigabyteMeasure(unitOfMeasure string) (float64, error) {
@@ -54,7 +47,22 @@ func ParseManagedDiskType(meterName string) string {
 	return name
 }
 
-func ParseManagedDiskRedundancy(meterName string) string {
+func ParseRedisCacheInstance(meterName string) string {
+	name := strings.Replace(meterName, " Instance", "", 1)
+	return strings.Replace(name, " Cache", "", 1)
+}
+
+func ParseRedisCacheSeries(meterSubCategory string) (string, error) {
+	if strings.Contains(meterSubCategory, "Standard") {
+		return "Standard", nil
+	} else if strings.Contains(meterSubCategory, "Basic") {
+		return "Basic", nil
+	} else {
+		return "", errors.New(fmt.Sprintf("Redis Cache (meterSubCategory: \"%s\"): was not detected as Basic or Standard", meterSubCategory))
+	}
+}
+
+func ParseStorageRedundancy(meterName string) string {
 	meterNameLower := strings.ToLower(meterName)
 	// LRS
 	if strings.Contains(meterNameLower, "lrs") {
@@ -76,7 +84,6 @@ func ParseManagedDiskRedundancy(meterName string) string {
 	} else {
 		return ""
 	}
-
 }
 
 func ParseVirtualmachineMachine(meterName string) string {

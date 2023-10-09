@@ -2,12 +2,26 @@ package azure_constants_meters
 
 var (
 	ESTIMABLE_METER_CATEGORIES = []string{
+		// Compute and Memory
 		"Azure App Service",
-		"Container Registry",
-		"Redis Cache",
-		"Specialized Compute",
-		"Storage",
 		"Virtual Machines",
+
+		// Memory
+		"Redis Cache",
+
+		// Storage
+		"Storage",
+		"Container Registry",
+
+		// Networking
+		"Azure Front Door Service",
+		"Bandwidth",
+		"Azure Bastion",
+		"Load Balancer",
+		"Azure Firewall",
+
+		// To do: add the following categories
+		// "Specialized Compute",
 	}
 
 	UNESTIMABLE_METER_CATEGORIES = []string{
@@ -33,8 +47,6 @@ var (
 		"Azure Database for PostgreSQL",
 		"Azure Databricks",
 		"Azure DevOps",
-		"Azure Firewall",
-		"Azure Front Door Service",
 		"Azure Lab Services",
 		"Azure Maps",
 		"Azure Monitor",
@@ -42,7 +54,6 @@ var (
 		"Azure Site Recovery",
 		"Azure Stack",
 		"Backup",
-		"Bandwidth",
 		"BizTalk Services",
 		"Cloud Services",
 		"Cognitive Services",
@@ -63,7 +74,6 @@ var (
 		"IoT Central",
 		"IoT Hub",
 		"Key Vault",
-		"Load Balancer",
 		"Log Analytics",
 		"Logic Apps",
 		"Machine Learning Service",
