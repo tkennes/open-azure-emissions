@@ -25,7 +25,7 @@ jobs:
 
       # Saves us from having to redownload all modules
       - name: Go Mod cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.cache/go-build
